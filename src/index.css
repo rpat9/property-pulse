@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import 'tailwindcss';
+
+:root {
+    --color-text-primary: #1A1A1A;
+    --color-bg: #F8F9FC;
+    --color-primary: #4C5FD5;
+    --color-bg-navbar: #FFFFFF;
+    --btn-bg-color: #E0E7FF;
+    --btn-hover-color: #C7D2FE;
+    --color-outline: #CBD5E1;
+}
+
+
+body {
+    background-color: var(--color-bg);
+    font-family: 'Inter', sans-serif;
+}
+
+.dark body {
+    background-color: var(--color-bg);
+    --color-bg: #141414;
+    --color-primary: #703BF7;
+    --color-text-primary: #FFFCF7;
+    --color-bg-navbar: #1A1A1A;
+    --btn-bg-color: #141414;
+    --btn-hover-color: #9DAED2;
+    --color-outline: #C2D19E;
+}
+
+
+.nav-link {
+    @apply text-lg font-semibold text-[var(--color-text-primary)] hover:underline transition px-2 lg:px-4 py-2 rounded-xl;
+}
+
+.nav-link-mobile {
+    @apply text-lg font-semibold text-[var(--color-text-primary)] hover:underline transition px-2 py-2 rounded-xl;
+}
+
+.hover-size {
+    @apply hover:scale-103 transition duration-300 ease-in-out;
+}
