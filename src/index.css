@@ -9,6 +9,7 @@
     --btn-bg-color: #E0E7FF;
     --btn-hover-color: #C7D2FE;
     --color-outline: #CBD5E1;
+    --color-card: #E0E7FF;
 }
 
 
@@ -26,6 +27,7 @@ body {
     --btn-bg-color: #141414;
     --btn-hover-color: #9DAED2;
     --color-outline: #C2D19E;
+    --color-card: #1A1A1A;
 }
 
 
@@ -35,6 +37,14 @@ body {
 
 .nav-link-mobile {
     @apply text-lg font-semibold text-[var(--color-text-primary)] hover:underline transition px-2 py-2 rounded-xl;
+}
+
+.metric-cards {
+    @apply px-4 py-2 rounded-lg bg-[var(--color-card)] text-[var(--color-text-primary)] border-[var(--color-outline)] border-1
+}
+
+.button-primary {
+    @apply px-4 py-2 rounded-lg cursor-pointer bg-[var(--color-primary)] text-white border-[var(--color-outline)] border-1
 }
 
 .hover-size {
