@@ -1,7 +1,7 @@
 import Navbar from "./components/LandingPage/Navbar";
 import Hero from "./components/LandingPage/Hero";
+import Features from "./components/LandingPage/Features";
 // import Metrics from "./components/LandingPage/Metrics";
-// import Featured from "./components/LandingPage/Featured";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
     return (
       <div>
         <Hero />
+        <Features />
         {/* <Metrics /> */}
         {/* <Featured /> */}
       </div>
@@ -22,7 +23,7 @@ function App() {
       <Navbar />
       
       {/* Main content wrapper with top padding to account for fixed navbar */}
-      <main className="pt-20">
+      <main className="pt-8">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           {/* Add more routes here as needed */}
