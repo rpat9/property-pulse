@@ -10,18 +10,18 @@ export default function Hero() {
     ]
 
     return (
-        <section className="min-h-screen w-full flex bg-[var(--color-bg)] relative overflow-hidden">
+        <section className="w-full flex bg-[var(--color-bg)] relative overflow-hidden mb-10">
             <div className="container mx-auto px-4 sm:px-6">
                 
                 <div className="flex flex-col lg:hidden">
                     <div className="flex-1 flex flex-col justify-center py-12">
 
                         <div className="text-center space-y-6">
-                            <span className="text-3xl sm:text-4xl font-bold text-[var(--color-text-primary)] block">
+                            <span className="text-2xl sm:text-4xl font-bold text-[var(--color-text-primary)] block">
                                 <Typewriter text="Property Pulse" />
                             </span>
 
-                            <h1 className="text-3xl sm:text-4xl font-bold text-[var(--color-text-primary)] leading-tight">
+                            <h1 className="text-2xl sm:text-4xl font-bold text-[var(--color-text-primary)] leading-tight">
                                 AI-Powered Real Estate Intelligence
                             </h1>
 
@@ -52,11 +52,14 @@ export default function Hero() {
                         </div>
                     </div>
 
-                    <div className="flex gap-2 justify-center pb-10 overflow-hidden">
+                    <div className="flex gap-2 justify-center pb-10">
 
                         {metrics.map((metric) => {
                             return (
-                                <div className="metric-cards">
+                                <div  
+                                    key={metric.label} 
+                                    className="metric-cards"
+                                >
                                     <h1 className="text-[var(--color-primary)] text-2xl font-bold">{metric.num}</h1>
                                     <p className="text-sm">{metric.label}</p>
                                 </div>
@@ -64,12 +67,12 @@ export default function Hero() {
                         })}
 
                     </div>
-
                 </div>
 
 
-                <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-8">
+                <div className="hidden lg:flex gap-12 items-center">
+
+                    <div className="space-y-8 pt-30">
 
                         <span className="text-5xl font-bold text-[var(--color-text-primary)] block">
                             <Typewriter text="Property Pulse" />
@@ -102,9 +105,13 @@ export default function Hero() {
                             
                             {metrics.map((metric) => {
                                 return (
-                                    <div className="metric-cards" title={`${metric.num} ${metric.label}`}>
+                                    <div 
+                                        className="metric-cards cursor-default" 
+                                        title={`${metric.num} ${metric.label}`}
+                                        key={metric.label}
+                                    >
                                         <h1 className="text-[var(--color-primary)] text-3xl font-bold">{metric.num}</h1>
-                                        <p className="text-xs">{metric.label}</p>
+                                        <p className="text-sm">{metric.label}</p>
                                     </div>
                                 )
                             })}
@@ -114,13 +121,14 @@ export default function Hero() {
                     </div>
                     
                     <div className="flex items-center justify-center">
-                        <div className="pl-10 w-full max-w-2xl h-96 lg:h-[500px] xl:h-[600px]">
+                        <div className="pl-12 w-full max-w-2xl h-96 lg:h-[500px] xl:h-[600px]">
                             <AnimatedChart />
                         </div>
                     </div>
 
                 </div>
             </div>
+
         </section>
     )
 }
