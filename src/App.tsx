@@ -1,7 +1,7 @@
 import Navbar from "./components/LandingPage/Navbar";
 import Hero from "./components/LandingPage/Hero";
 import Features from "./components/LandingPage/Features";
-// import Metrics from "./components/LandingPage/Metrics";
+import FAQ from "./components/LandingPage/FAQ";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -11,8 +11,7 @@ function App() {
       <div>
         <Hero />
         <Features />
-        {/* <Metrics /> */}
-        {/* <Featured /> */}
+        <FAQ />
       </div>
     )
   }
