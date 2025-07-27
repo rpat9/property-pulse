@@ -10,7 +10,7 @@ export default function Hero() {
     ]
 
     return (
-        <section className="w-full flex bg-[var(--color-bg)] relative overflow-hidden mb-10">
+        <section className="w-full flex bg-[var(--color-bg)] relative overflow-hidden sm:mb-10">
             <div className="container mx-auto px-4 sm:px-6">
                 
                 <div className="flex flex-col lg:hidden">
