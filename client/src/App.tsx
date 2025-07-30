@@ -2,7 +2,8 @@ import Navbar from "./components/LandingPage/Navbar";
 import Hero from "./components/LandingPage/Hero";
 import Features from "./components/LandingPage/Features";
 import FAQ from "./components/LandingPage/FAQ";
-import Contact from "./components/Contact";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/contact-us" element={<Contact />} />
+          <Route path="/about-us" element={<About />} />
         </Routes>
       </main>
 
