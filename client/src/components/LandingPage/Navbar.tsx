@@ -99,7 +99,7 @@ export default function Navbar() {
                             </Link>
 
                             <Link 
-                                to="/about" 
+                                to="/about-us" 
                                 className={`nav-link-mobile hover-size ${activeTab === "About" ? selectedButton : ""}`}
                                 onClick={() => setIsMenuOpen(false)}
                             >
@@ -136,7 +136,7 @@ export default function Navbar() {
                     </Link>
 
                     <Link 
-                        to="/about" 
+                        to="/about-us" 
                         className={`nav-link hover-size ${activeTab === "About" ? selectedButton : ""}`}
                     >
                         About
