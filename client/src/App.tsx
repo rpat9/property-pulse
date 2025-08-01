@@ -6,33 +6,50 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { useEffect } from "react";
+
 function App() {
 
-  const LandingPage = () => {
+    useEffect(() =>{
+
+        const checkHealth = async () => {
+            try {
+                const res = await fetch("http://localhost:8080/health");
+                const data = await res.json();
+                console.log("Backend health:", data.health);
+            } catch (err) {
+                console.error("Failed to connect to backend:", err);
+            }
+        };
+
+        checkHealth();
+    }, []);
+
+    const LandingPage = () => {
+        return (
+            <div>
+                <Hero />
+                <Features />
+                <FAQ />
+            </div>
+        )
+    }
+
     return (
-      <div>
-        <Hero />
-        <Features />
-        <FAQ />
-      </div>
+        <Router>
+
+            <Navbar />
+
+            <main className="pt-8">
+                <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/contact-us" element={<Contact />} />
+                    <Route path="/about-us" element={<About />} />
+                </Routes>
+            </main>
+
+        </Router>
     )
-  }
-
-  return (
-    <Router>
-      
-      <Navbar />
-      
-      <main className="pt-8">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/contact-us" element={<Contact />} />
-          <Route path="/about-us" element={<About />} />
-        </Routes>
-      </main>
-
-    </Router>
-  )
 }
 
 export default App;
