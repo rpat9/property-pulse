@@ -21,7 +21,7 @@ body {
 .dark body {
     background-color: var(--color-bg);
     --color-bg: #141414;
-    --color-primary: #703BF7;
+    --color-primary: #8356f5;
     --color-text-primary: #FFFCF7;
     --color-bg-navbar: #1A1A1A;
     --btn-bg-color: #141414;
