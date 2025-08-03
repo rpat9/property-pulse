@@ -16,7 +16,7 @@ function App() {
             try {
                 const res = await fetch("http://localhost:8080/health");
                 const data = await res.json();
-                console.log("Backend health:", data.health);
+                console.log(`${data.health}`);
             } catch (err) {
                 console.error("Failed to connect to backend:", err);
             }
