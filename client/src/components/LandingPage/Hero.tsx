@@ -1,5 +1,6 @@
 import AnimatedChart from "./helpers/AnimatedChart";
 import Typewriter from "./helpers/TypeWriter";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
 
@@ -30,7 +31,7 @@ export default function Hero() {
                             </p>
                         </div>
 
-                        <div className="mt-8 flex justify-center gap-6">
+                        <div className="mt-8 flex flex-col justify-center gap-6">
                             <button 
                                 className="button-primary hover-size"
                             >
@@ -42,6 +43,14 @@ export default function Hero() {
                             >
                                 Explore Insights
                             </button>
+
+                            <Link
+                                to="/contact-us"
+                                className="button-primary hover-size text-center"
+                            >
+                                Contact Us
+                            </Link>
+
                         </div>
 
                     </div>
@@ -98,6 +107,13 @@ export default function Hero() {
                             >
                                 Explore Insights
                             </button>
+
+                            <Link
+                                to="/contact-us"
+                                className="button-primary hover-size"
+                            >
+                                Contact Us
+                            </Link>
                             
                         </div>
 
