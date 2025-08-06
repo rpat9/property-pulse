@@ -115,11 +115,19 @@ export default function Navbar() {
                             </Link>
 
                             <Link 
-                                to="/contact-us" 
+                                to="/login" 
                                 className="rounded-full px-4 py-2 bg-[var(--color-primary)] text-white font-semibold shadow-md hover:opacity-90 hover-size"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                Contact Us
+                                Login
+                            </Link>
+
+                            <Link 
+                                to="/signup" 
+                                className="rounded-full px-4 py-2 bg-[var(--color-primary)] text-white font-semibold shadow-md hover:opacity-90 hover-size"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Signup
                             </Link>
 
                         </div>
@@ -154,10 +162,17 @@ export default function Navbar() {
                 <div className="hidden sm:flex gap-4 items-center">
 
                     <Link 
-                        to="/contact-us" 
+                        to="/login" 
                         className="rounded-full px-2 lg:px-4 py-2 bg-[var(--color-primary)] text-white font-semibold shadow-md hover:opacity-90 hover-size"
                     >
-                        Contact Us
+                        Login
+                    </Link>
+
+                    <Link 
+                        to="/signup" 
+                        className="rounded-full px-2 lg:px-4 py-2 bg-[var(--color-primary)] text-white font-semibold shadow-md hover:opacity-90 hover-size"
+                    >
+                        Signup
                     </Link>
 
                     <motion.button 
