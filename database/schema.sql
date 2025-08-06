@@ -115,6 +115,15 @@ CREATE TABLE user_favorites (
     CONSTRAINT unique_favorite UNIQUE(user_id, property_id)
 );
 
+-- Multiple images per property
+CREATE TABLE property_images (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    property_id UUID REFERENCES property_listings(id) ON DELETE CASCADE,
+    image_url TEXT NOT NULL,
+    is_primary BOOLEAN DEFAULT false,
+    uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create triggers for tables with updated_at columns
 -- Trigger for property_listings table
 CREATE TRIGGER update_property_listings_updated_at
@@ -138,3 +147,4 @@ CREATE INDEX idx_ai_predictions_model ON ai_predictions (model_version);
 CREATE INDEX idx_property_price ON property_listings (price);
 CREATE INDEX idx_property_status ON property_listings (listing_status, is_published);
 CREATE INDEX idx_investment_score ON ai_predictions (investment_score DESC);
+CREATE INDEX idx_images_property ON property_images (property_id);
