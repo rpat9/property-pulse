@@ -4,6 +4,8 @@ import Features from "./components/LandingPage/Features";
 import FAQ from "./components/LandingPage/FAQ";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useEffect } from "react";
@@ -45,11 +47,13 @@ function App() {
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/contact-us" element={<Contact />} />
                     <Route path="/about-us" element={<About />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
                 </Routes>
             </main>
 
         </Router>
-    )
+    );
 }
 
 export default App;
