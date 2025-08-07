@@ -2,7 +2,7 @@ package com.property_pulse.backend.Model;
 
 public enum Role {
     USER("user"),
-    ADMIN("amdin");
+    ADMIN("admin");
 
     private final String value;
 
