@@ -62,9 +62,6 @@ ehthumbs.db
 # --------------------
 .env
 .env.*
-application.properties
-application-local.properties
-application.yml
 
 # --------------------
 # Logs & Reports
