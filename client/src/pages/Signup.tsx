@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -31,6 +34,33 @@ export default function Signup() {
             return;
         }
 
+        try {
+            const response = await fetch("http://localhost:8080/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    password: formData.password,
+                    phone: "" // Phone add later
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                toast.success("Signup successful!");
+                localStorage.setItem("token", data.token);
+                navigate('/');
+            } else {
+                toast.error("Signup failed")
+                console.error(data.message)
+            }
+            
+        } catch (error) {
+            console.error(error)
+        }
         
         setFormData({
             firstName: "",

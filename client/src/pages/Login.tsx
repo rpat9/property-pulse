@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -14,6 +17,31 @@ export default function Login() {
         if (!formData.email || !formData.password) {
             toast.error("Please fill in all fields!");
             return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password
+                }),
+            });
+
+            const data = await response.json();
+
+            if(response.ok){
+                toast.success("Successfully logged in!");
+                localStorage.setItem("token", data.token);
+                navigate('/');
+            } else {
+                toast.error("Login Failed");
+                console.error(data.message);
+            }
+
+        } catch (error){
+            console.error(error);
         }
 
         setFormData({
