@@ -16,47 +16,49 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+        private final UserRepository userRepository;
+        private final PasswordEncoder passwordEncoder;
+        private final JwtService jwtService;
+        private final AuthenticationManager authenticationManager;
 
-    public AuthResponse register(RegisterRequest request) {
-        // Check if user already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered");
+        public AuthResponse register(RegisterRequest request) {
+                // Check if user already exists
+                if (userRepository.existsByEmail(request.getEmail())) {
+                        throw new RuntimeException("Email already registered");
+                }
+
+                var user = new User(
+                                request.getFirstName(),
+                                request.getLastName(),
+                                request.getEmail(),
+                                request.getPhone(),
+                                passwordEncoder.encode(request.getPassword()));
+
+                userRepository.save(user);
+
+                var jwtToken = jwtService.generateToken(user);
+
+                return AuthResponse.builder()
+                                .token(jwtToken)
+                                .message("User successfully registered")
+                                .build();
         }
 
-        var user = new User(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPhone(),
-                passwordEncoder.encode(request.getPassword()));
+        public AuthResponse authenticate(LoginRequest request) {
+                authenticationManager.authenticate(
+                                new UsernamePasswordAuthenticationToken(
+                                                request.getEmail(),
+                                                request.getPassword()));
 
-        userRepository.save(user);
+                var user = userRepository.findByEmail(request.getEmail())
+                                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        var jwtToken = jwtService.generateToken(user);
+                var jwtToken = jwtService.generateToken(user);
 
-        return AuthResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
-
-    public AuthResponse authenticate(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()));
-
-        var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        var jwtToken = jwtService.generateToken(user);
-
-        return AuthResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
+                return AuthResponse.builder()
+                                .token(jwtToken)
+                                .message("User logged in")
+                                .build();
+        }
 
 }
