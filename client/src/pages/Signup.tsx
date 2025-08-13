@@ -37,29 +37,33 @@ export default function Signup() {
         try {
             const response = await fetch("http://localhost:8080/api/auth/register", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                credentials: 'include',
                 body: JSON.stringify({
                     firstName: formData.firstName,
                     lastName: formData.lastName,
                     email: formData.email,
                     password: formData.password,
-                    phone: "" // Phone add later
+                    phone: ""
                 }),
             });
-
+        
             const data = await response.json();
-
+            
             if (response.ok) {
-                toast.success("Signup successful!");
+                toast.success(data.message || "Signup successful!");
                 localStorage.setItem("token", data.token);
                 navigate('/');
             } else {
-                toast.error("Signup failed")
-                console.error(data.message)
+                toast.error(data.message || "Signup failed");
             }
-            
+
         } catch (error) {
-            console.error(error)
+            console.error('Error during signup:', error);
+            toast.error("Signup failed. Please try again later.");
         }
         
         setFormData({
