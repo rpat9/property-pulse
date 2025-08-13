@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Role role = Role.USER;
+    private Role role = Role.user;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -56,7 +56,7 @@ public class User implements UserDetails {
         this.email = email;
         this.phone = phone;
         this.passwordHash = passwordHash;
-        this.role = Role.USER;
+        this.role = Role.user;
         this.isActive = true;
     }
 
