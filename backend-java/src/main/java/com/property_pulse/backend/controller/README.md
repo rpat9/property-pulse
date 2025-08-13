@@ -1,0 +1,127 @@
+# API Documentation
+
+## Authentication APIs
+
+### Register User
+
+```http
+POST /api/auth/register
+```
+
+**Request Body:**
+
+```json
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string"
+}
+```
+
+**Success Response:**
+
+```json
+{
+  "token": "string",
+  "message": "User successfully registered"
+}
+```
+
+**Error Response:**
+
+```json
+{
+  "token": null,
+  "message": "Email already registered"
+}
+```
+
+### Login User
+
+```http
+POST /api/auth/login
+```
+
+**Request Body:**
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+**Success Response:**
+
+```json
+{
+  "token": "string",
+  "message": "Login successful"
+}
+```
+
+## Data Transfer Objects (DTOs)
+
+### AuthResponse
+
+Used for authentication responses:
+
+```java
+public class AuthResponse {
+    private String token;
+    private String message;
+}
+```
+
+### RegisterRequest
+
+Used for user registration:
+
+```java
+public class RegisterRequest {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String password;
+}
+```
+
+### LoginRequest
+
+Used for user login:
+
+```java
+public class LoginRequest {
+    private String email;
+    private String password;
+}
+```
+
+## Error Handling
+
+All endpoints follow this error response format:
+
+```json
+{
+  "message": "Error description",
+  "timestamp": "2025-08-13T19:16:19Z",
+  "status": 400,
+  "path": "/api/endpoint"
+}
+```
+
+Common HTTP Status Codes:
+
+- 200: Success
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 500: Internal Server Error
+
+```
+
+```

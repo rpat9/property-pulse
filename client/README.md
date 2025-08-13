@@ -1,75 +1,191 @@
-# Client
+# Property Pulse Frontend
 
-================
+A modern React application for real estate investment analysis, built with TypeScript and Vite.
 
-## Table of Contents
+## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
-- [Available Scripts](#available-scripts)
-- [Configuration](#configuration)
-- [Dependencies](#dependencies)
-- [Contributing](#contributing)
+- [Development](#development)
+- [Architecture](#architecture)
+- [Styling](#styling)
+- [Documentation](#documentation)
 
-## Overview
+## 🎯 Overview
 
-This is the client-side application for Property Pulse, a real estate analyzer. The application is built using React, TypeScript, and Vite.
+Property Pulse is a real estate investment analysis platform that helps investors evaluate properties, analyze market trends, and make data-driven decisions.
 
-## Getting Started
+## ✨ Features
 
-To get started with the application, follow these steps:
+- User authentication (signup/login)
+- Property search and filtering
+- Investment analysis tools
+- AI-powered property predictions
+- Responsive design for all devices
+- Dark/Light mode support
 
-1. Clone the repository: `git clone https://github.com/rpat9/property-pulse.git`
-2. Navigate to the client directory: `cd client`
-3. Install dependencies: `npm install`
-4. Start the development server: `npm run dev`
+## 💻 Tech Stack
 
-## Project Structure
+- **Framework:** React 18
+- **Language:** TypeScript
+- **Build Tool:** Vite
+- **Styling:** TailwindCSS
+- **Routing:** React Router v6
+- **State Management:** React Context + Hooks
+- **Form Handling:** React Hook Form
+- **Notifications:** React Hot Toast
 
-The project is organized into the following directories:
+## 🚀 Getting Started
 
-- `src`: Contains the application code
-  - `components`: UI components (organized by feature)
-  - `pages`: Application pages
-- `public`: Contains static assets
-- `styles`: Contains global CSS styles
+### Prerequisites
 
-## Available Scripts
+- Node.js 18+
+- npm 9+
 
-The following scripts are available:
+### Installation
 
-- `npm run dev`: Starts the development server
-- `npm run build`: Builds the application for production
-- `npm run lint`: Runs ESLint on the application code
-- `npm run preview`: Starts a preview server for the built application
+```bash
+# Clone the repository
+git clone https://github.com/rpat9/property-pulse.git
 
-## Configuration
+# Navigate to client directory
+cd property-pulse/client
 
-The application uses the following configuration files:
+# Install dependencies
+npm install
 
-- `vite.config.ts`: Vite configuration
-- `tailwind.config.js`: Tailwind CSS configuration
-- `tsconfig.json`: TypeScript configuration
+# Start development server
+npm run dev
+```
 
-## Dependencies
+## 📁 Project Structure
 
-The application depends on the following packages:
+```
+client/
+├── src/
+│   ├── assets/          # Static assets (images, fonts)
+│   ├── components/      # Reusable UI components
+│   │   └── LandingPage/ # Feature-specific components
+│   ├── pages/          # Route components
+│   ├── styles/         # Global styles and themes
+│   ├── App.tsx         # Root component
+│   ├── main.tsx        # Entry point
+│   └── vite-env.d.ts   # TypeScript declarations
+├── public/             # Public static files
+├── index.html          # HTML template
+├── tailwind.config.js  # Tailwind configuration
+├── tsconfig.json       # TypeScript configuration
+├── vite.config.ts      # Vite configuration
+└── package.json        # Dependencies and scripts
+```
 
-- `react`
-- `react-dom`
-- `react-router-dom`
-- `tailwindcss`
-- `typescript`
-- `vite`
+## ⚙️ Development
 
-## Contributing
+### Available Scripts
 
-To contribute to the application, follow these steps:
+```bash
+# Start development server
+npm run dev
 
-1. Fork the repository
-2. Create a new branch for your feature or bug fix
-3. Make your changes and commit them
-4. Open a pull request against the main branch
+# Build for production
+npm run build
 
-Please follow standard professional guidelines for commit messages and API documentation.
+# Preview production build
+npm run preview
+
+# Run linting
+npm run lint
+
+# Run tests
+npm run test
+```
+
+### Code Quality Tools
+
+- ESLint for code linting
+- Prettier for code formatting
+- TypeScript for type checking
+- Husky for git hooks
+
+## 🏗️ Architecture
+
+### Component Organization
+
+- **Atomic Design Principles**
+  - atoms/ (basic components)
+  - molecules/ (compound components)
+  - organisms/ (complex components)
+  - templates/ (page layouts)
+  - pages/ (route components)
+
+### State Management
+
+- React Context for global state
+- Local state with useState
+- Custom hooks for reusable logic
+
+## 🎨 Styling
+
+### TailwindCSS Configuration
+
+Custom theme configuration in `tailwind.config.js`:
+
+```javascript
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {...},
+        secondary: {...}
+      }
+    }
+  }
+}
+```
+
+### CSS Organization
+
+- Global styles in `index.css`
+- Component-specific styles using Tailwind classes
+- CSS variables for theming
+
+## 📚 Documentation
+
+- [Components](src/components/README.md)
+- [Pages](src/pages/README.md)
+- [State Management](docs/state-management.md)
+- [API Integration](docs/api-integration.md)
+
+## 🤝 Contributing
+
+### Branch Strategy
+
+- `main`: Production-ready code
+- `develop`: Development branch
+- `feature/*`: New features
+- `bugfix/*`: Bug fixes
+
+### Commit Guidelines
+
+Follow conventional commits:
+
+```
+feat: add new feature
+fix: resolve bug
+docs: update documentation
+style: format code
+refactor: restructure code
+test: add tests
+```
+
+### Pull Request Process
+
+1. Create feature/bugfix branch
+2. Make changes and test
+3. Submit PR against develop
+4. Get code review
+5. Merge after approval
