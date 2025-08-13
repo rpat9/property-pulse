@@ -1,5 +1,5 @@
-import AnimatedChart from "./helpers/AnimatedChart";
-import Typewriter from "./helpers/TypeWriter";
+import AnimatedChart from "../helpers/AnimatedChart";
+import Typewriter from "../helpers/TypeWriter";
 import { Link } from "react-router-dom";
 
 export default function Hero() {

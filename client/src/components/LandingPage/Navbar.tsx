@@ -52,7 +52,7 @@ export default function Navbar() {
                 <div className="sm:hidden flex items-center gap-3">
                     <motion.button 
                         onClick={() => setIsMenuOpen(!isMenuOpen)} 
-                        className="text-[var(--color-text-primary)]"
+                        className="text-[var(--color-text-primary)] cursor-pointer"
                         whileTap={{ scale: 0.9 }}
                         whileHover={{ scale: 1.1 }}
                         transition={{delay: 0.4}}
@@ -189,6 +189,7 @@ export default function Navbar() {
                         >
                             {isDarkMode ? <Sun /> : <Moon />}
                         </motion.div>
+                        
                     </motion.button>
 
                 </div>
