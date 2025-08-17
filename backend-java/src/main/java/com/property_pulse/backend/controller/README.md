@@ -62,6 +62,29 @@ POST /api/auth/login
 }
 ```
 
+## User APIs
+
+### Get User Profile
+
+```http
+GET /api/user/profile
+```
+
+**Authentication Required:** Bearer Token
+
+**Success Response:**
+
+```json
+{
+  "id": "uuid",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "phone": "string",
+  "role": "string"
+}
+```
+
 ## Data Transfer Objects (DTOs)
 
 ### AuthResponse
@@ -100,6 +123,21 @@ public class LoginRequest {
 }
 ```
 
+### UserProfile
+
+Used for user profile responses:
+
+```java
+public class UserProfile {
+    private UUID id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String role;
+}
+```
+
 ## Error Handling
 
 All endpoints follow this error response format:
@@ -121,7 +159,3 @@ Common HTTP Status Codes:
 - 403: Forbidden
 - 404: Not Found
 - 500: Internal Server Error
-
-```
-
-```

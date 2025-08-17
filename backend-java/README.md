@@ -19,12 +19,11 @@ Property Pulse Backend is a RESTful API service that powers the Property Pulse p
 
 ## 💻 Tech Stack
 
-- **Framework:** Spring Boot
+- **Framework:** Spring Boot 3
 - **Language:** Java 21
 - **Database:** PostgreSQL (Supabase)
-- **Security:** JWT Authentication
+- **Security:** Spring Security with JWT Authentication
 - **Build Tool:** Maven
-- **API Documentation:** SpringDoc OpenAPI (Swagger)
 
 ## 📁 Project Structure
 
@@ -35,11 +34,17 @@ backend-java/
 │       ├── java/com/property_pulse/backend/
 │       │   ├── config/           # Configuration classes
 │       │   ├── controller/       # REST API controllers
-│       │   ├── dto/              # Data Transfer Objects
-│       │   ├── model/            # Entity models
-│       │   ├── repository/       # Data access layer
-│       │   ├── security/         # Security configurations
-│       │   └── service/          # Business logic
+│       │   ├── dto/             # Data Transfer Objects
+│       │   │   ├── AuthResponse.java
+│       │   │   ├── LoginRequest.java
+│       │   │   ├── RegisterRequest.java
+│       │   │   └── UserProfile.java
+│       │   ├── model/           # Entity models
+│       │   ├── repository/      # Data access layer
+│       │   ├── security/        # Security configurations
+│       │   │   ├── JwtAuthenticationFilter.java
+│       │   │   └── JwtService.java
+│       │   └── service/         # Business logic
 │       └── resources/
 │           └── application.properties
 └── pom.xml
@@ -62,7 +67,7 @@ SUPABASE_DB_URL=your_database_url
 SUPABASE_DB_USERNAME=your_database_username
 SUPABASE_DB_PASSWORD=your_database_password
 JWT_SECRET=your_jwt_secret
-JWT_EXPIRATION=3600
+JWT_EXPIRATION=86400000
 ```
 
 ### Building and Running
@@ -88,18 +93,32 @@ mvn spring-boot:run
 
 The server will start at `http://localhost:8080`
 
-## 📚 API Documentation
-
-Once the application is running, you can access the API documentation at:
-
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
-- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
 ### Current API Endpoints
 
-- Authentication
-  - POST `/api/auth/register` - User registration
-  - POST `/api/auth/login` - User login
+#### Authentication
+- POST `/api/auth/register` - User registration
+  - Request: firstName, lastName, email, phone, password
+  - Response: JWT token
+- POST `/api/auth/login` - User login
+  - Request: email, password
+  - Response: JWT token
+
+#### User Management
+- GET `/api/user/profile` - Get user profile
+  - Protected endpoint
+  - Response: User profile details
+
+#### Public Endpoints
+- GET `/` - Root path
+- GET `/health` - Health check
+- GET `/index.html` - Main page
+- Static resources:
+  - `/css/**`
+  - `/js/**`
+  - `/images/**`
+  - `/static/**`
+  - `/assets/**`
 
 ## 🗄️ Database
 
@@ -116,12 +135,32 @@ Database migrations and schema details can be found in [database/README.md](data
 
 ## 🔒 Security
 
-The application implements the following security measures:
+The application implements comprehensive security measures:
 
+### Authentication & Authorization
 - JWT-based authentication
+- Stateless session management
 - Password encryption using BCrypt
-- CORS configuration for frontend integration
 - Role-based access control (User/Admin)
+
+### Security Configurations
+- Custom JWT Authentication Filter
+- JWT Service for token operations
+- User Details Service with email-based lookup
+- DaoAuthenticationProvider with BCrypt encoding
+
+### CORS Configuration
+```java
+Allowed Origins: http://localhost:5173
+Allowed Methods: GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH
+Allowed Headers: Authorization, Cache-Control, Content-Type, etc.
+Max Age: 86400000 ms
+```
+
+### Protected Routes
+- All endpoints except public ones require JWT authentication
+- Token format: `Bearer <token>`
+- Token validation on each request
 
 ## 🤝 Contributing
 

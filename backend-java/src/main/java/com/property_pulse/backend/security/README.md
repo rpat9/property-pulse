@@ -26,10 +26,48 @@ Handles JWT-related operations:
 
 Contains security-related configurations:
 
-- CORS settings
-- Authentication provider setup
-- Request authorization rules
-- Password encoding
+#### Authentication
+
+- Custom UserDetailsService implementation using email-based lookup
+- DaoAuthenticationProvider with BCrypt password encoding
+- Stateless session management
+
+#### CORS Configuration
+
+```java
+configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+configuration.setAllowedHeaders(List.of(
+    "Authorization", 
+    "Cache-Control", 
+    "Content-Type",
+    "Accept", 
+    "X-Requested-With", 
+    "Access-Control-Allow-Origin", 
+    "Access-Control-Allow-Headers",
+    "Origin"
+));
+```
+
+#### Public Endpoints
+
+The following endpoints are publicly accessible:
+
+- `/` - Root path
+- `/index.html` - Main page
+- `/health` - Health check
+- `/favicon.ico` - Favicon
+- Static resources:
+  - `/css/**`
+  - `/js/**`
+  - `/images/**`
+  - `/static/**`
+  - `/assets/**`
+- Authentication endpoints:
+  - `/api/auth/login`
+  - `/api/auth/register`
+
+All other endpoints require authentication.
 
 ## Authentication Flow
 
@@ -40,7 +78,7 @@ Contains security-related configurations:
    ```
 
    - Validates user input
-   - Encrypts password
+   - Encrypts password using BCrypt
    - Creates new user
    - Returns JWT token
 
@@ -66,17 +104,16 @@ Contains security-related configurations:
 
 ### CORS Configuration
 
-```java
-configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With"));
-```
+- Configured for development with localhost:5173
+- Customizable allowed origins, methods, and headers
+- Supports credentials
+- 1-hour max age for preflight requests
 
-### JWT Configuration
+### Session Management
 
-- Configurable expiration time
-- Secure secret key storage
-- Token refresh mechanism
+- Stateless session policy
+- No session cookies used
+- Authentication state maintained via JWT tokens
 
 ## Adding Protected Routes
 
