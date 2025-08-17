@@ -1,27 +1,27 @@
 /* Light Theme (Default) */
 :root {
-    --color-text-primary: #1A1A1A;
+    --color-text-primary: #1F2937;
     --color-text-secondary: #6B7280;
-    --color-bg: #F8F9FC;
-    --color-primary: #4C5FD5;
+    --color-bg: #F9FAFB;
+    --color-primary: #2563eb;
     --color-bg-navbar: #FFFFFF;
-    --btn-bg-color: #E0E7FF;
-    --btn-hover-color: #C7D2FE;
-    --color-outline: #CBD5E1;
-    --color-card: #E0E7FF;
+    --btn-bg-color: #EFF6FF;
+    --btn-hover-color: #DBEAFE;
+    --color-outline: #E5E7EB;
+    --color-card: #FFFFFF;
 }
 
 /* Dark Theme */
 .dark {
-    --color-text-primary: #FFFCF7;
+    --color-text-primary: #F9FAFB;
     --color-text-secondary: #D1D5DB;
-    --color-bg: #141414;
-    --color-primary: #8356f5;
-    --color-bg-navbar: #1A1A1A;
-    --btn-bg-color: #141414;
-    --btn-hover-color: #9DAED2;
-    --color-outline: #C2D19E;
-    --color-card: #1A1A1A;
+    --color-bg: #111827;
+    --color-primary: #3B82F6;
+    --color-bg-navbar: #1F2937;
+    --btn-bg-color: #1F2937;
+    --btn-hover-color: #374151;
+    --color-outline: #374151;
+    --color-card: #1F2937;
 }
 
 /* Theme transition for smooth switching */
