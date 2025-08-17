@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -37,8 +36,14 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return username -> {
+            log.info("Loading user by username: {}", username);
+            return userRepository.findByEmail(username)
+                    .orElseThrow(() -> {
+                        log.error("User not found: {}", username);
+                        return new UsernameNotFoundException("User not found: " + username);
+                    });
+        };
     }
 
     @Bean
@@ -63,10 +68,21 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type",
-                "Accept", "X-Requested-With", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"));
-        configuration.setExposedHeaders(List.of("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+        configuration.setAllowedHeaders(List.of(
+            "Authorization", 
+            "Cache-Control", 
+            "Content-Type",
+            "Accept", 
+            "X-Requested-With", 
+            "Access-Control-Allow-Origin", 
+            "Access-Control-Allow-Headers",
+            "Origin"
+        ));
+        configuration.setExposedHeaders(List.of(
+            "Access-Control-Allow-Origin", 
+            "Access-Control-Allow-Credentials"
+        ));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 
@@ -76,38 +92,40 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthFilter)
-            throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthFilter) throws Exception {
 
         log.info("Configuring security filter chain...");
 
-        http
-                .cors(Customizer.withDefaults()) // Changed this line
-                .csrf(csrf -> {
-                    csrf.disable();
-                    log.info("CSRF disabled");
-                })
-                .authorizeHttpRequests(auth -> {
-                    auth
-                            .requestMatchers(
-                                    "/",
-                                    "/index.html",
-                                    "/health",
-                                    "/favicon.ico",
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**",
-                                    "/static/**",
-                                    "/assets/**",
-                                    "/api/auth/**" // Changed to match all auth endpoints
-                    ).permitAll()
-                            .anyRequest().authenticated();
-                    log.info("Authorization rules configured");
-                })
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> {
+                csrf.disable();
+                log.info("CSRF disabled");
+            })
+            .authorizeHttpRequests(auth -> {
+                auth
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/index.html").permitAll() 
+                .requestMatchers("/health").permitAll()
+                .requestMatchers("/favicon.ico").permitAll()
+                .requestMatchers("/css/**").permitAll()
+                .requestMatchers("/js/**").permitAll()
+                .requestMatchers("/images/**").permitAll()
+                .requestMatchers("/static/**").permitAll()
+                .requestMatchers("/assets/**").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/register").permitAll()
+                .anyRequest().authenticated();
+                
+                log.info("Authorization rules configured");
+            })
+            .sessionManagement(session -> {
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                log.info("Session management set to stateless");
+            })
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
+        log.info("Security filter chain configured successfully");
         return http.build();
     }
 
