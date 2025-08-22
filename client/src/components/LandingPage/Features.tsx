@@ -1,13 +1,40 @@
 import { TrendingUpDown, House, ChartCandlestick, NotebookPen, MoveUpRight } from "lucide-react"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 
 export default function Features() {
 
+    const navigate = useNavigate();
+
     const features = [
-        {icon: <TrendingUpDown className="text-[var(--color-primary)]" size="30"/>, label: "Accurate Price Estimates", description: "Powered by real-time data and comps"},
-        {icon: <House className="text-[var(--color-primary)]" size="30" />, label: "Neighborhood Analysis", description: "Crime, walk score, schools, more"},
-        {icon: <ChartCandlestick className="text-[var(--color-primary)]" size="30" />, label: "Investment Risk Metrics", description: "Market volatility, price trend, ROI"},
-        {icon: <NotebookPen className="text-[var(--color-primary)]" size="30" />, label: "Data-Driven Comparisions", description: "Compare homes side-by-side intelligently"}
+        {
+            linkto:"price-estimates",
+            icon: <TrendingUpDown className="text-[var(--color-primary)]" size="30"/>,
+            label: "Accurate Price Estimates",
+            description: "Powered by real-time data and comps"
+        },
+        {
+            linkto: "neighborhood-analysis",
+            icon: <House className="text-[var(--color-primary)]" size="30" />,
+            label: "Neighborhood Analysis",
+            description: "Crime, walk score, schools, more"
+        },
+        {
+            linkto: "investment-metrics",
+            icon: <ChartCandlestick className="text-[var(--color-primary)]" size="30" />,
+            label: "Investment Risk Metrics",
+            description: "Market volatility, price trend, ROI"
+        },
+        {
+            linkto: "property-comparison",
+            icon: <NotebookPen className="text-[var(--color-primary)]" size="30" />,
+            label: "Data-Driven Comparisions",
+            description: "Compare homes side-by-side intelligently"
+        }
     ]
+
+    const handleFeaturesClick = (serviceId: string) => {
+        navigate(`/services#${serviceId}`);
+    }
 
     return (
         <section className="w-full flex bg-[var(--color-bg)] relative sm:mb-10">
@@ -18,7 +45,11 @@ export default function Features() {
 
                         {features.map((feature) => {
                             return (
-                                <div key={feature.label} className="metric-cards flex flex-col h-full">
+                                <div 
+                                    key={feature.label} 
+                                    className="metric-cards flex flex-col h-full"
+                                    onClick={() => handleFeaturesClick(feature.linkto)}
+                                >
                                     <div className="flex justify-end mb-4">
                                         <MoveUpRight size="20"/>
                                     </div>
@@ -48,7 +79,11 @@ export default function Features() {
 
                     {features.map((feature) => {
                         return (
-                            <div key={feature.label} className="metric-cards fade-in flex flex-col flex-1 cursor-pointer hover-size">
+                            <div 
+                                key={feature.label} 
+                                className="metric-cards fade-in flex flex-col flex-1 cursor-pointer hover-size"
+                                onClick={() => handleFeaturesClick(feature.linkto)}
+                            >
                                 <div className="flex justify-end mb-4">
                                     <MoveUpRight size="20"/>
                                 </div>

@@ -31,7 +31,7 @@ The Hero component is the top section of the landing page. It contains a animate
 
 #### Features
 
-The Features component displays the key features of the application. It uses the Lucide React library to render icons and provides a brief description of each feature.
+The Features component displays the key features of the application. It uses the Lucide React library to render icons and provides a brief description of each feature. Each feature is linked to services page with more details per feature.
 
 #### FAQ
 
