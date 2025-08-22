@@ -2,10 +2,10 @@
 :root {
     --color-text-primary: #1F2937;
     --color-text-secondary: #6B7280;
-    --color-bg: #F9FAFB;
+    --color-bg: #f1f6fa;
     --color-primary: #2563eb;
     --color-bg-navbar: #FFFFFF;
-    --btn-bg-color: #EFF6FF;
+    --btn-bg-color: rgb(206, 222, 245);
     --btn-hover-color: #DBEAFE;
     --color-outline: #E5E7EB;
     --color-card: #FFFFFF;
@@ -18,7 +18,7 @@
     --color-bg: #111827;
     --color-primary: #3B82F6;
     --color-bg-navbar: #1F2937;
-    --btn-bg-color: #1F2937;
+    --btn-bg-color: #506d97;
     --btn-hover-color: #374151;
     --color-outline: #374151;
     --color-card: #1F2937;

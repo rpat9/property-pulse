@@ -10,6 +10,7 @@
   - [Contact](#contact)
   - [Login](#login)
   - [Signup](#signup)
+  - [Services](#services)
 
 ## Overview
 
@@ -33,12 +34,27 @@ The Login page component renders the login form for the application. It allows u
 
 The Signup page component renders the signup form for the application. It allows users to create a new account by entering their information and password.
 
+### Services
+
+The Services page component displays our comprehensive suite of real estate analysis tools and features. It includes:
+
+- **Price Estimates**: AI-driven property valuation using comprehensive market data
+- **Neighborhood Analysis**: Location intelligence with geographical insights
+- **Investment Risk Metrics**: AI-powered investment analysis and scoring
+- **Data-Driven Comparisons**: Advanced property comparison tools
+
+Each service section features:
+- Detailed breakdowns of capabilities
+- Real-time data analysis features
+- Interactive navigation with smooth scrolling
+- Responsive design for all devices
+
 ## Usage
 
 To use these pages in your application, simply import them into your JavaScript file and render them as needed. For example:
 
 ```jsx
-import { About, Contact, Login, Signup } from "./pages";
+import { About, Contact, Login, Signup, Services } from "./pages";
 
 function App() {
   return (
@@ -47,6 +63,7 @@ function App() {
       <Route path="/contact" component={Contact} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <Route path="/services" component={Services} />
     </div>
   );
 }
@@ -54,6 +71,15 @@ function App() {
 
 Note: This is just a sample usage example and may not reflect the actual usage in your application.
 
-## API Documentation
 
-Each page component has its own API documentation. Please refer to the individual page component files for more information on their props, methods, and usage.
+### Services Page Navigation
+
+The Services page supports URL hash navigation for direct access to specific sections:
+
+```javascript
+// Example URLs for direct section access
+/services#price-estimates
+/services#neighborhood-analysis
+/services#investment-metrics
+/services#property-comparison
+```
