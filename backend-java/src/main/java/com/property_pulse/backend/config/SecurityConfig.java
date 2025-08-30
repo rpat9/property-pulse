@@ -113,6 +113,7 @@ public class SecurityConfig {
                 .requestMatchers("/static/**").permitAll()
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/keepalive").permitAll()
                 .requestMatchers("/api/auth/register").permitAll()
                 .anyRequest().authenticated();
                 
