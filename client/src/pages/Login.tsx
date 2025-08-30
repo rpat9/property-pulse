@@ -1,131 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Login() {
-    const navigate = useNavigate();
-
+    const { login, isLoading } = useAuth();
+  
     const [formData, setFormData] = useState({
         email: "",
         password: ""
     });
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    // Redirect if already logged in
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            // Optionally verify token is still valid here
-            navigate('/');
-        }
-    }, [navigate]);
-
-    const fetchUserProfile = async (token: string) => {
-        try {
-            const response = await fetch("http://localhost:8080/api/user/profile", {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const userData = await response.json();
-                console.log('User logged in:', userData);
-                return userData;
-            } else {
-                console.warn('Could not fetch user profile');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error fetching user profile:', error);
-            return null;
-        }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleLogin = async (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
-    
-        if (!formData.email || !formData.password) {
-            toast.error("Please fill in all fields!");
-            return;
-        }
-    
-        setIsLoading(true);
-    
-        try {
-            const response = await fetch("http://localhost:8080/api/auth/login", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    email: formData.email.trim(),
-                    password: formData.password
-                }),
-            });
-    
-            const data = await response.json();
-    
-            if (response.ok && data.token) {
-                // Success!
-                localStorage.setItem("token", data.token);
-                await fetchUserProfile(data.token);
-                toast.success(data.message || "Welcome back!");
-                
-                setTimeout(() => {
-                    navigate('/');
-                }, 1000);
-    
-            } else {
-                // Handle different error status codes
-                let errorMessage = data.message || "Login failed";
-                
-                switch (response.status) {
-                    case 400:
-                        // Validation errors
-                        toast.error(errorMessage);
-                        break;
-                    case 401:
-                        // Invalid credentials or disabled account
-                        toast.error(errorMessage);
-                        break;
-                    case 500:
-                        // Server error
-                        toast.error("Server error. Please try again later.");
-                        break;
-                    default:
-                        toast.error("Something went wrong. Please try again.");
-                }
-                
-                console.error("Login error:", {
-                    status: response.status,
-                    message: errorMessage,
-                    data
-                });
-            }
-    
-        } catch (error) {
-            console.error("Network error during login:", error);
-            toast.error("Cannot connect to server. Please check your internet connection.");
-        } finally {
-            setIsLoading(false);
-        }
-    
-        // Clear password for security
-        setFormData(prev => ({
-            ...prev,
-            password: ""
-        }));
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleLogin();
-    };
+        await login(formData.email, formData.password);
+    };    
 
     return (
         <section className="w-full flex bg-[var(--color-bg)] relative overflow-hidden mt-14">
@@ -137,8 +32,8 @@ export default function Login() {
                     </h1>
                 </div>
 
-                <div className="max-w-md mx-auto bg-[var(--color-bg)] border border-[var(--color-outline)] rounded-lg shadow-md p-6 text-[var(--color-text-primary)]">
-                    
+                <div className="max-w-md mx-auto bg-[var(--color-card)] border border-[var(--color-outline)] rounded-lg shadow-md p-6 text-[var(--color-text-primary)]">
+                
                     <form onSubmit={handleSubmit} className="flex flex-col justify-center space-y-4">
 
                         <div>
@@ -147,11 +42,13 @@ export default function Login() {
                             </label>
                             <input
                                 type="email"
+                                name="email"
                                 value={formData.email}
                                 required
                                 disabled={isLoading}
-                                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed text-[var(--color-text-primary)] bg-[var(--color-card)]"
+                                style={{ color: 'var(--color-text-primary)' }}
                                 placeholder="Enter your email"
                                 autoComplete="email"
                             />
@@ -163,20 +60,22 @@ export default function Login() {
                             </label>
                             <input
                                 type="password"
+                                name="password"
                                 required
                                 value={formData.password}
                                 disabled={isLoading}
-                                onChange={(e) => setFormData({...formData, password: e.target.value})}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed text-[var(--color-text-primary)] bg-[var(--color-card)]"
+                                style={{ color: 'var(--color-text-primary)' }}
                                 placeholder="Enter your password"
                                 autoComplete="current-password"
                             />
                         </div>
                         
                         <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="button-primary hover-size items-center disabled:opacity-50 disabled:cursor-not-allowed relative"
+                        type="submit"
+                        disabled={isLoading}
+                        className="button-primary hover-size items-center disabled:opacity-50 disabled:cursor-not-allowed relative"
                         >
                             {isLoading ? (
                                 <div className="flex items-center justify-center gap-2">
@@ -189,15 +88,14 @@ export default function Login() {
                         </button>
 
                         <Link
-                            to="/signup"
-                            className="text-[var(--color-primary)] hover:underline flex justify-center"
+                        to="/signup"
+                        className="text-[var(--color-primary)] hover:underline flex justify-center"
                         >
                             Don't have an account? Signup here
                         </Link>
 
                     </form>
                 </div>
-
             </div>
         </section>
     );

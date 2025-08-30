@@ -23,6 +23,7 @@ export default function Navbar() {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
     const [user, setUser] = useState<UserProfile | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [fetchError, setFetchError] = useState<string | null>(null);
 
     const isAuthenticated = !!localStorage.getItem("token");
     
@@ -49,17 +50,19 @@ export default function Navbar() {
         }
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetchUserProfile = async () => {
+            setIsLoading(true);
+            setFetchError(null);
 
             const token = localStorage.getItem("token");
+
             if(!token) {
                 setIsLoading(false);
                 return;
             }
 
             try {
-
                 const response = await fetch("http://localhost:8080/api/user/profile", {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -71,22 +74,30 @@ export default function Navbar() {
                     const userData = await response.json();
                     setUser(userData);
                 } else {
-                    localStorage.removeItem("token");
-                    setUser(null);
+                    console.error('Failed to fetch user profile:', response.status);
+                    setFetchError('Failed to load user profile');
+                    // Only clear token on 401 Unauthorized
+                    if (response.status === 401) {
+                        localStorage.removeItem("token");
+                    }
                 }
 
             } catch (error) {
-                console.error('Error fetching user profile');
-                localStorage.removeItem("token");
-                setUser(null);
+                console.error('Error fetching user profile:', error);
+                setFetchError('Network error when fetching profile');
             } finally {
                 setIsLoading(false);
             }
+        };
 
+        // Only fetch if authenticated
+        if (isAuthenticated) {
+            fetchUserProfile();
+        } else {
+            setIsLoading(false);
         }
 
-        fetchUserProfile();
-    }, []);
+    }, [isAuthenticated]);
 
     const toggleDarkMode = () => {
         const newMode = !isDarkMode;
@@ -110,10 +121,10 @@ export default function Navbar() {
         }
 
         if (isMobile) {
-            return `Hi, ${user.firstName}!`
+            return `Hi, ${user.firstName}!`;
         } else {
-            const fullName = `${user.firstName} ${user.lastName}`
-            return fullName.length > 20 ? `Welcome, ${user.firstName}!` : `Welcome, ${fullName}!`
+            const fullName = `${user.firstName} ${user.lastName}`;
+            return fullName.length > 20 ? `Welcome, ${user.firstName}!` : `Welcome, ${fullName}!`;
         }
     }
 
@@ -249,8 +260,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="hidden sm:flex gap-4 items-center">
-                    
-                    {!isLoading && (
+                    {!isLoading ? (
                         <>
                             {!isAuthenticated ? (
                                 <>
@@ -272,7 +282,7 @@ export default function Navbar() {
                                 <div className="relative">
                                     <motion.button
                                         onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                                        className="flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--btn-bg-color)] text-[var(--color-text-primary)] hover-size"
+                                        className="flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--btn-bg-color)] text-[var(--color-text-primary)] hover-size cursor-pointer"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -281,7 +291,7 @@ export default function Navbar() {
                                             {getUserGreeting()}
                                         </span>
                                         <span className="lg:hidden text-sm font-medium">
-                                            Hi, {user.firstName}!
+                                            {user.firstName ? `Hi, ${user.firstName}!` : 'My Account'}
                                         </span>
                                     </motion.button>
                                     
@@ -294,17 +304,16 @@ export default function Navbar() {
                                             <button
                                                 onClick={() => {
                                                     setIsUserMenuOpen(false);
-                                                    // Add navigation to profile page when you create it
-                                                    // navigate("/profile");
+                                                    navigate("/user/profile/home");
                                                 }}
-                                                className="w-full text-left px-4 py-2 text-sm text-[var(--color-text-primary)] hover:bg-[var(--btn-bg-color)] transition-colors"
+                                                className="w-full text-left px-4 py-2 text-sm text-[var(--color-text-primary)] hover:bg-[var(--btn-bg-color)] transition-colors cursor-pointer"
                                             >
                                                 Profile Settings
                                             </button>
                                             
                                             <button
                                                 onClick={handleLogout}
-                                                className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-[var(--btn-bg-color)] transition-colors flex items-center gap-2"
+                                                className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-[var(--btn-bg-color)] transition-colors flex items-center gap-2 cursor-pointer"
                                             >
                                                 <LogOut size={16} />
                                                 Logout
@@ -312,8 +321,21 @@ export default function Navbar() {
                                         </div>
                                     )}
                                 </div>
-                            ) : null}
+                            ) : (
+                                <div className="flex items-center gap-2">
+                                    {fetchError ? (
+                                        <button
+                                            onClick={() => navigate(0)}
+                                            className="text-sm text-red-500 hover:underline"
+                                        >
+                                            Error loading profile. Click to retry.
+                                        </button>
+                                    ) : null}
+                                </div>
+                            )}
                         </>
+                    ) : (
+                        <div className="w-8 h-8 rounded-full bg-[var(--btn-bg-color)] animate-pulse"></div>
                     )}
 
                     <motion.button 
@@ -331,6 +353,7 @@ export default function Navbar() {
                             {isDarkMode ? <Sun /> : <Moon />}
                         </motion.div>
                     </motion.button>
+
                 </div>
             </div>
         </nav>
