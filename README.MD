@@ -6,7 +6,7 @@ An AI-powered real estate investment and analysis platform that helps users eval
 
 **Current Phase**: Active Development  
 **Version**: 0.1.0 (Pre-release)  
-**Last Updated**: December 2024
+**Last Updated**: August 2025
 
 > This project is under active development. Core features are functional, with ongoing work on ML integration and UI enhancements.
 
@@ -17,14 +17,15 @@ An AI-powered real estate investment and analysis platform that helps users eval
 - 📊 Modern responsive React frontend with TailwindCSS
 - 🧠 Spring Boot REST API with PostgreSQL integration
 - 🛡️ User authentication foundation (Spring Security)
-- 📈 Interactive property analytics dashboard
-- 📄 Admin interface structure
+- 🌓 Dark/light theme toggle
 
 ### 🚧 In Progress
 
 - 🤖 Python ML service integration for property evaluation
+- 📈 Interactive property analytics dashboard
 - 📊 Advanced market analytics and financial metrics
 - 🔒 Complete authentication and authorization system
+- 📄 Admin interface structure
 
 ### 🎯 Planned
 
@@ -64,9 +65,12 @@ An AI-powered real estate investment and analysis platform that helps users eval
 property-pulse/
 ├── client/                # React TypeScript frontend
 │   ├── src/
+│   │   ├── assets/        # Assets
 │   │   ├── components/    # UI components (organized by feature)
 │   │   ├── hooks/         # Custom React hooks
+│   │   ├── pages/         # Different pages in the application
 │   │   ├── services/      # API integration
+│   │   ├── styles/        # Custom CSS styles for entire application
 │   │   └── types/         # TypeScript definitions
 │   └── package.json
 ├── backend-java/          # Spring Boot REST API
@@ -76,11 +80,9 @@ property-pulse/
 │   │   ├── repository/    # Data access layer
 │   │   └── model/         # JPA entities
 │   └── pom.xml
-├── ml-python/             # Python ML services (in development)
-│   └── requirements.txt
-├── docs/                  # Project documentation
-├── db/                    # Database scripts and migrations
-└── docker-compose.yml     # Development environment setup
+├── ml-services/           # Python ML services (in development)
+├── database/              # Database scripts and migrations
+└── docker-compose.yml     # Coming soon
 ```
 
 ## 🚀 Getting Started

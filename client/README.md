@@ -65,21 +65,21 @@ npm run dev
 
 ```
 client/
+├── public/                 # Static files
 ├── src/
-│   ├── assets/          # Static assets (images, fonts)
-│   ├── components/      # Reusable UI components
-│   │   └── LandingPage/ # Feature-specific components
-│   ├── pages/          # Route components
-│   ├── styles/         # Global styles and themes
-│   ├── App.tsx         # Root component
-│   ├── main.tsx        # Entry point
-│   └── vite-env.d.ts   # TypeScript declarations
-├── public/             # Public static files
-├── index.html          # HTML template
-├── tailwind.config.js  # Tailwind configuration
-├── tsconfig.json       # TypeScript configuration
-├── vite.config.ts      # Vite configuration
-└── package.json        # Dependencies and scripts
+│   ├── assets/             # Images, icons, and other assets
+│   ├── components/         # React components
+│   │   ├── helpers/        # Shared UI components
+│   │   ├── LandingPage/    # Layout components
+│   ├── context/            # React context providers
+│   ├── hooks/              # Custom React hooks
+│   ├── pages/              # Page components
+│   ├── services/           # API service modules
+│   ├── styles/             # Global styles
+│   ├── types/              # TypeScript type definitions
+│   ├── utils/              # Utility functions
+│   ├── App.tsx             # Main App component
+│   └── main.tsx            # Entry point
 ```
 
 ## ⚙️ Development
@@ -108,26 +108,47 @@ npm run test
 - ESLint for code linting
 - Prettier for code formatting
 - TypeScript for type checking
-- Husky for git hooks
 
 ## 🏗️ Architecture
 
 ### Component Organization
 
-- **Atomic Design Principles**
-  - atoms/ (basic components)
-  - molecules/ (compound components)
-  - organisms/ (complex components)
-  - templates/ (page layouts)
-  - pages/ (route components)
+- **Feature-based structure**
+  - `/components` - Reusable UI components
+  - `/pages` - Route-level components
+  - `/context` - Global state management
+  - `/services` - API integrations
+  - `/hooks` - Custom React hooks
 
 ### State Management
 
-- React Context for global state
-- Local state with useState
+- AuthContext for user authentication
+- React Router for navigation state
+- Local component state with useState
 - Custom hooks for reusable logic
 
 ## 🎨 Styling
+
+### CSS Organization
+
+- Global themes in `themes.css`
+- Component styles in `components.css`
+- CSS variables for theming:
+  ```css
+  :root {
+    --color-text-primary: #1F2937;
+    --color-text-secondary: #6B7280;
+    --color-bg: #f1f6fa;
+    --color-primary: #2563eb;
+    /* and more... */
+  }
+
+  .dark {
+    --color-text-primary: #F9FAFB;
+    --color-text-secondary: #D1D5DB;
+    --color-bg: #111827;
+    /* and more... */
+  }
 
 ### TailwindCSS Configuration
 
@@ -149,7 +170,7 @@ module.exports = {
 
 ### CSS Organization
 
-- Global styles in `index.css`
+- Global styles in `src/styles/index.css`
 - Component-specific styles using Tailwind classes
 - CSS variables for theming
 

@@ -1,60 +1,157 @@
 # Client Components README
 
-==========================
-
 ## Table of Contents
 
 - [Overview](#overview)
-- [Components](#components)
-  - [LandingPage](#landingpage)
-    - [Hero](#hero)
-    - [Features](#features)
-    - [FAQ](#faq)
-    - [Navbar](#navbar)
-    - [Helpers](#helpers)
-      - [AnimatedChart](#animatedchart)
-      - [TypeWriter](#typewriter)
+- [Core Components](#core-components)
+  - [Navbar](#navbar)
+  - [ProtectedRoute](#protectedroute)
+- [Landing Page Components](#landing-page-components)
+  - [Hero](#hero)
+  - [Features](#features)
+  - [FAQ](#faq)
+- [Helper Components](#helper-components)
+  - [AnimatedChart](#animatedchart)
+  - [TypeWriter](#typewriter)
+- [Page Components](#page-components)
+- [Context Providers](#context-providers)
 
 ## Overview
 
-This directory contains the UI components for the client-side application. Each component is designed to be reusable and modular, making it easy to maintain and update the application.
+This directory contains the UI components for the Property Pulse application. Each component is designed to be reusable and modular, making it easy to maintain and update the application.
 
-## Components
+## Core Components
 
-### LandingPage
+### Navbar
 
-The LandingPage component is the main entry point for the application. It contains several sub-components that make up the landing page.
+The Navbar component serves as the main navigation interface across all pages. It provides:
+- Responsive design with mobile menu toggle
+- Dark/light theme toggle functionality
+- Dynamic links based on authentication state
+- User profile menu with logout functionality
+- Active tab highlighting
 
-#### Hero
+```jsx
+<Navbar />
+```
 
-The Hero component is the top section of the landing page. It contains a animated chart and a typewriter effect that displays the application's tagline.
+### ProtectedRoute
 
-#### Features
+A wrapper component that protects routes requiring authentication:
+- Redirects unauthenticated users to login
+- Shows loading state during auth checks
+- Preserves attempted URL for post-login redirect
 
-The Features component displays the key features of the application. It uses the Lucide React library to render icons and provides a brief description of each feature. Each feature is linked to services page with more details per feature.
+```jsx
+<Route element={<ProtectedRoute />}>
+  <Route path="/user/profile/home" element={<UserProfileHome />} />
+</Route>
+```
 
-#### FAQ
+## Landing Page Components
 
-The FAQ component displays a list of frequently asked questions and answers. It uses a accordion-style layout to make it easy to read and navigate.
+### Hero
 
-#### Navbar
+The Hero component is the top section of the landing page featuring:
+- Typewriter animation for the main title
+- Responsive layout for all device sizes
+- Animated data visualization chart
+- Call-to-action buttons
+- Key metrics display
 
-The Navbar component is the navigation bar at the top of the application. It contains links to the main sections of the application and a toggle button to switch between light and dark mode.
+```jsx
+<Hero />
+```
 
-### Helpers
+### Features
 
-The Helpers directory contains utility components that can be used throughout the application.
+The Features component showcases the application's key capabilities:
+- Interactive feature cards with icons
+- Direct navigation to detailed service pages
+- Responsive grid layout for different screen sizes
 
-#### AnimatedChart
+```jsx
+<Features />
+```
 
-The AnimatedChart component is a reusable chart component that can be used to display animated data. It uses the React Motion library to animate the chart.
+### FAQ
 
-#### TypeWriter
+The FAQ component presents common questions in an interactive format:
+- Carousel for desktop view
+- Expandable list for mobile view
+- Auto-responsive based on screen width
 
-The TypeWriter component is a reusable typewriter effect component that can be used to display text in a typewriter-style animation. It uses the React Motion library to animate the text.
+```jsx
+<FAQ />
+```
+
+## Helper Components
+
+### AnimatedChart
+
+A reusable SVG-based chart component that creates an animated data visualization:
+- Building-style visualization with animation
+- Customizable sizing and colors
+- Purely CSS/SVG based animation (no charting library dependency)
+
+```jsx
+<AnimatedChart />
+```
+
+### TypeWriter
+
+Creates a typewriter text animation effect:
+- Letter-by-letter animation using Framer Motion
+- Customizable text and timing
+- Enhances visual interest on the landing page
+
+```jsx
+<Typewriter text="Property Pulse" />
+```
+
+## Page Components
+
+The application includes several full-page components:
+- **About** - Company information and mission
+- **Contact** - User contact form
+- **Login** - Authentication form
+- **Signup** - User registration
+- **Services** - Detailed service information
+- **UserProfileHome** - Protected user dashboard
+
+## Context Providers
+
+### AuthContext
+
+Manages authentication state across the application:
+- User login/signup functionality
+- Profile data management
+- Authentication state persistence
+- Protected route control
+
+```jsx
+<AuthProvider>
+  {children}
+</AuthProvider>
+```
 
 ## Usage
 
-To use these components in your application, simply import them into your JavaScript file and render them as needed. For example:
+Components are structured for easy import and composition:
 
-Note: This is just a sample usage example and may not reflect the actual usage in your application.
+```jsx
+import Navbar from "./components/Navbar";
+import Hero from "./components/LandingPage/Hero";
+import { useAuth } from "./hooks/useAuth";
+
+function App() {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      {/* Additional components */}
+    </>
+  );
+}
+```
+```
