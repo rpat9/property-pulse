@@ -10,6 +10,7 @@
   - [Signup](#signup)
   - [Services](#services)
   - [UserProfileHome](#userprofilehome)
+  - [PropertyDetails](#property-details)
 - [Hooks](#hooks)
   - [useAuth](#useauth)
 
@@ -78,7 +79,14 @@ The UserProfileHome page is a protected route that displays the user's dashboard
 - Only accessible to authenticated users
 - Personal user information display
 - Account management options
-- Will contain future property tracking features
+- Will contain future property tracking 
+
+### Property Details
+
+This page displays property details for a property based on it's id. A sample route would be like: ```/property/1```
+- This route is accessible to everyone
+- Property information is extracted from the database and displayed
+- Will contain AI Predictions
 
 ## Hooks
 

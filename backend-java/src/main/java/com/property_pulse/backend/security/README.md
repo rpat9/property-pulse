@@ -66,6 +66,8 @@ The following endpoints are publicly accessible:
 - Authentication endpoints:
   - `/api/auth/login`
   - `/api/auth/register`
+- Utility endpoints:
+  - `/api/keepalive`
 
 All other endpoints require authentication.
 

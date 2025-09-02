@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Services from "./pages/Services";
 import UserProfileHome from "./pages/UserProfileHome";
+import PropertyDetails from "./pages/PropertyDetails";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -54,7 +55,8 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/services" element={<Services />} />
-
+                        <Route path="/property/:id" element={<PropertyDetails />} />
+                        
                         <Route element={<ProtectedRoute />}>
                             <Route path="/user/profile/home" element={<UserProfileHome />} />
                         </Route>
