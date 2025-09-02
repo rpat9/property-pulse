@@ -159,3 +159,28 @@ Common HTTP Status Codes:
 - 403: Forbidden
 - 404: Not Found
 - 500: Internal Server Error
+
+## Utility APIs
+
+### KeepAlive - Ping Database
+
+```http
+GET /api/keepalive
+```
+Description: This endpoint is used to check the health of the database connection. It executes a simple query (SELECT 1) to verify if the database is reachable.
+
+**Success Response:**
+
+```json
+{
+  "message": "Database pinged successfully at: 2025-08-01T12:00:00"
+}
+```
+
+**Error Response:**
+
+```json
+{
+  "message": "Database ping failed: [Error details]"
+}
+```
