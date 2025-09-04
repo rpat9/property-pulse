@@ -119,7 +119,7 @@ export default function PropertyDetails() {
                     </div>
                     <button
                         onClick={toggleFavorite}
-                        className="mt-2 p-2 rounded-full bg-[var(--color-card)] border border-[var(--color-outline)] hover:bg-[var(--btn-bg-color)] transition-colors"
+                        className="mt-2 p-2 rounded-full bg-[var(--color-card)] border border-[var(--color-outline)] hover:bg-[var(--btn-bg-color)] transition-colors cursor-pointer"
                     >
                         <Heart 
                             size={20} 
@@ -148,7 +148,7 @@ export default function PropertyDetails() {
                                 <img
                                     src={image.image_url}
                                     alt={`Property view ${index + 1}`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover cursor-pointer"
                                 />
                             </button>
                         ))}
@@ -168,7 +168,7 @@ export default function PropertyDetails() {
                         <button
                             onClick={prevImage}
                             disabled={currentImageIndex === 0}
-                            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="absolute cursor-pointer left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <ChevronLeft size={20} />
                         </button>
@@ -176,7 +176,7 @@ export default function PropertyDetails() {
                         <button
                             onClick={nextImage}
                             disabled={!property.property_images || currentImageIndex === property.property_images.length - 1}
-                            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="absolute cursor-pointer right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <ChevronRight size={20} />
                         </button>
